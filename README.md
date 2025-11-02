@@ -13,5 +13,5 @@ npm start
 
 # or
 
-node ipinf.js
+node ip-inf.js
 ```
