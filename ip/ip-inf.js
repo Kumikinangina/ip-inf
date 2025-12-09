@@ -52,35 +52,7 @@ function printBanner() {
   console.log(chalk.gray("   ── stealth mode engaged · cli ip lookup ──\n"));
 }
 
-// fetch inf
-async function fetchIpInfo(ip) {
-  const url = ip ? `https://ipinfo.io/${ip}/json` : `https://ipinfo.io/json`;
-  const spinner = ora("Querying ipinfo.io...").start();
-  try {
-    const res = await fetch(url, { timeout: 15000 });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    spinner.succeed("Data retrieved successfully!");
-    return data;
-  } catch (err) {
-    spinner.fail("Failed to retrieve IP data.");
-    throw err;
-  }
-}
 
-// print results
-function printInfoBox(data) {
-  console.log(chalk.blueBright("╔══════════════════════════════════════════╗"));
-  console.log(chalk.red.bold(` 🌐 IP:`), chalk.whiteBright(data.ip || "N/A"));
-  console.log(chalk.red.bold(` 🏙️ City:`), chalk.whiteBright(data.city || "N/A"));
-  console.log(chalk.red.bold(` 🗺️ Region:`), chalk.whiteBright(data.region || "N/A"));
-  console.log(chalk.red.bold(` 🏳️ Country:`), chalk.whiteBright(data.country || "N/A"));
-  console.log(chalk.red.bold(` 📍 Location:`), chalk.whiteBright(data.loc || "N/A"));
-  console.log(chalk.red.bold(` 🏢 Organization:`), chalk.whiteBright(data.org || "N/A"));
-  console.log(chalk.red.bold(` 📬 Postal:`), chalk.whiteBright(data.postal || "N/A"));
-  console.log(chalk.red.bold(` ⏰ Timezone:`), chalk.whiteBright(data.timezone || "N/A"));
-  console.log(chalk.blueBright("╚══════════════════════════════════════════╝\n"));
-}
 
 function buildGoogleMapsExactLink(loc, zoom = 12) {
   if (!loc) return null;
